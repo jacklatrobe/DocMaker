@@ -1,0 +1,5 @@
+Flask
+celery
+tiktoken 
+langchain
+openai

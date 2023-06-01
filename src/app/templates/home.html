@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DocMaker</title>
+    <!-- Include Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <!-- Include CKEditor 5 Vue.js component -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ message }}</h1>
+        <ckeditor :editor="editor" v-model="editorData"></ckeditor>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: "{{ message }}",
+                editor: ClassicEditor,
+                editorData: '<p>Content of the editor.</p>'
+            }
+        });
+
+        function start_task() {
+            axios.post('/start_task')
+            .then(function (response) {
+                var taskId = response.data.task_id;
+                // you can now use taskId to check the status of the task
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
+
+        function check_task() {
+            axios.get('/task_status/' + taskId)
+            .then(function (response) {
+                console.log(response.data.state);
+                console.log(response.data.status);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
+    </script>
+</body>
+</html>
